@@ -126,6 +126,10 @@ public class Empresa {
         return this.catalogoAlquiler.toString();
     }
     
+    public String mostrarAlquiler(String nif){
+        
+    }
+    
     
     public String mostrarCliente(){
         return this.catalogoCliente.toString();

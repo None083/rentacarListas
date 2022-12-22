@@ -10,7 +10,8 @@ import java.util.Objects;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- *
+ *metodo que reciba un alquiler de un cliente y devuelva un nif
+ * 
  * @author noelia
  */
 public class Empresa {

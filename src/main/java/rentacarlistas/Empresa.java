@@ -10,8 +10,8 @@ import java.util.Objects;
 import org.apache.commons.lang3.RandomStringUtils;
 
 /**
- *metodo que reciba un alquiler de un cliente y devuelva un nif
- * 
+ * metodo que reciba un alquiler de un cliente y devuelva un nif
+ *
  * @author noelia
  */
 public class Empresa {
@@ -109,7 +109,7 @@ public class Empresa {
         Cliente auxCli = this.catalogoCliente.buscarCliente(dni);
         Vehiculo auxVe = this.catalogoVehiculo.buscarVehiculo(bastidor);
         if (auxCli != null && auxVe != null && auxVe.isDisponible() == true) {
-            this.catalogoAlquiler.anadirElemento(new Alquiler(auxCli, 
+            this.catalogoAlquiler.anadirElemento(new Alquiler(auxCli,
                     auxVe, fecha, numeroDias));
             auxVe.setDisponible(false);
             return true;
@@ -118,28 +118,80 @@ public class Empresa {
     }
 
     public void recibirVehiculo(Alquiler a) {
-        if(this.catalogoAlquiler.buscarAlquiler(a.getAlquilerID())!=null){
+        if (this.catalogoAlquiler.buscarAlquiler(a.getAlquilerID()) != null) {
             a.getVehiculo().setDisponible(true);
         }
     }
-    
-    public String mostrarAlquiler(){
+
+    public String mostrarAlquiler() {
         return this.catalogoAlquiler.toString();
     }
-    
-    public String mostrarAlquiler(String nif){
-        
+
+    public Catalogo<Alquiler> mostrarAlquileresCliente(String nif) {
+        Catalogo aux = new Catalogo<Alquiler>(0);
+        for (Alquiler alquiler : this.catalogoAlquiler.lista) {
+            if (alquiler.getCliente().getNIF().equalsIgnoreCase(nif)) {
+                aux.anadirElemento(alquiler);
+            }
+        }
+        return aux;
     }
-    
-    
-    public String mostrarCliente(){
+
+    public Catalogo<Alquiler> mostrarAlquileresVehiculo(String bastidor) {
+        Catalogo aux = new Catalogo<Alquiler>(0);
+        for (Alquiler alquiler : this.catalogoAlquiler.lista) {
+            if (alquiler.getVehiculo().getBastidor().equalsIgnoreCase(bastidor)) {
+                aux.anadirElemento(alquiler);
+            }
+        }
+        return aux;
+    }
+
+    public String mostrarCliente() {
         return this.catalogoCliente.toString();
     }
-    
-    public String mostrarVehiculo(){
+
+    public String mostrarVehiculo() {
         return this.catalogoVehiculo.toString();
     }
+
+    public void borrarAlquilerID(int ID) {
+        this.catalogoAlquiler.borrarElemento(this.catalogoAlquiler.buscarAlquiler(ID));
+    }
+
+    public void borrarCliente(String nif) {
+        boolean repetido = false;
+        for (Alquiler alquiler : this.catalogoAlquiler.lista) {
+            if (alquiler.getCliente().getNIF().equalsIgnoreCase(nif)) {
+                repetido = true;
+            }
+        }
+        if (repetido == false) {
+            this.catalogoCliente.borrarElemento(this.catalogoCliente.buscarCliente(nif));
+        }
+    }
+
+    public void borrarVehiculo(String bastidor) {
+        boolean repetido = false;
+        for (Alquiler alquiler : this.catalogoAlquiler.lista) {
+            if (alquiler.getVehiculo().getBastidor().equalsIgnoreCase(bastidor)) {
+                repetido = true;
+            }
+        }
+        if (repetido == false) {
+            this.catalogoVehiculo.borrarElemento(this.catalogoVehiculo.buscarVehiculo(bastidor));
+        }
+    }
     
+    public Catalogo<Vehiculo> mostrarVehiculosFecha(LocalDate fecha){
+        Catalogo aux = new Catalogo<Vehiculo>(0);
+        for (Alquiler alquiler : this.catalogoAlquiler.lista) {
+            if (alquiler.getFechaInicio().plusDays(alquiler.getDuracionDias()) == fecha){
+                aux.anadirElemento(alquiler.getVehiculo());
+            }
+        }
+        return aux;
+    }
 
     @Override
     public String toString() {

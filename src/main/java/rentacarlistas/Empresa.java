@@ -126,7 +126,18 @@ public class Empresa {
     public String mostrarAlquiler() {
         return this.catalogoAlquiler.toString();
     }
+    
+    public String mostrarCliente() {
+        return this.catalogoCliente.toString();
+    }
 
+    public String mostrarVehiculo() {
+        return this.catalogoVehiculo.toString();
+    }
+
+    //metodo para mostrar los alquileres se un cliente usando su nif
+    //se crea una nueva lista a la que se le van a ñadiendo todos los alquileres 
+    //que se encuentran con ese nif
     public Catalogo<Alquiler> mostrarAlquileresCliente(String nif) {
         Catalogo aux = new Catalogo<Alquiler>(0);
         for (Alquiler alquiler : this.catalogoAlquiler.lista) {
@@ -137,6 +148,9 @@ public class Empresa {
         return aux;
     }
 
+    //metodo para mostrar los alquileres de un vehiculo usando su bastidor
+    //se crea una nueva lista a la que se le van a ñadiendo todos los alquileres 
+    //que se encuentran con ese bastidor
     public Catalogo<Alquiler> mostrarAlquileresVehiculo(String bastidor) {
         Catalogo aux = new Catalogo<Alquiler>(0);
         for (Alquiler alquiler : this.catalogoAlquiler.lista) {
@@ -145,14 +159,6 @@ public class Empresa {
             }
         }
         return aux;
-    }
-
-    public String mostrarCliente() {
-        return this.catalogoCliente.toString();
-    }
-
-    public String mostrarVehiculo() {
-        return this.catalogoVehiculo.toString();
     }
 
     public void borrarAlquilerID(int ID) {
@@ -186,7 +192,7 @@ public class Empresa {
     public Catalogo<Vehiculo> mostrarVehiculosFecha(LocalDate fecha){
         Catalogo aux = new Catalogo<Vehiculo>(0);
         for (Alquiler alquiler : this.catalogoAlquiler.lista) {
-            if (alquiler.getFechaInicio().plusDays(alquiler.getDuracionDias()) == fecha){
+            if (alquiler.getFechaInicio().plusDays(alquiler.getDuracionDias()).equals(fecha)){
                 aux.anadirElemento(alquiler.getVehiculo());
             }
         }

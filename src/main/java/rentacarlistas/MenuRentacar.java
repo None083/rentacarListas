@@ -33,7 +33,10 @@ public class MenuRentacar {
                                4 - Mostrar vehículo
                                5 - Mostrar cliente
                                6 - Mostrar alquiler
-                               7 - Salir
+                               7 - Mostrar Alquileres por NIF
+                               8 - Mostrar Alquileres por bastidor
+                               9 - Borrar alquiler
+                               10 - Salir
                                """);
             opcion = teclado.nextInt();
             teclado.nextLine();
@@ -77,16 +80,32 @@ public class MenuRentacar {
                 case 5:
                     System.out.println("Mostrando el catalogo de clientes " + rentacar.mostrarCliente());
                     break;
-                case 6://No sé por qué, pero cuando muestro el alquiler está en null :(
+                case 6:
                     System.out.println("Mostrando el catalogo de alquileres " + rentacar.mostrarAlquiler());
                     break;
                 case 7:
+                    System.out.println("Introduzca un nif");
+                    String nif = teclado.nextLine();
+                    System.out.println(rentacar.mostrarAlquileresCliente(nif));
+                    break;
+                case 8:
+                    System.out.println("Introduzca un bastidor");
+                    bastidor = teclado.nextLine();
+                    System.out.println(rentacar.mostrarAlquileresCliente(bastidor));
+                    break;
+                case 9:
+                    System.out.println("Introduzca un ID de alquiler");
+                    int id = teclado.nextInt();
+                    rentacar.borrarAlquilerID(id);
+                    break;
+
+                case 10:
                     System.out.println("Hasta luegui <3");
                     break;
                 default:
-                    System.out.println("Numero no válido");
+                    System.out.println("Número no válido");
             }
-        }while(opcion != 7);
+        }while(opcion != 10);
         
     }
     
